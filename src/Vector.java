@@ -1,25 +1,26 @@
 public class Vector {
     private double value;
-    private double theta;
+    private double angle;
+    // in radians
 
     // constructors
 
     // default
     public Vector(){
         value = 0.0;
-        theta = 0.0;
+        angle = 0.0;
     }
 
     // value
     public Vector(double value, double angle){
         this.value = value;
-        theta = angle;
+        this.angle = angle;
     }
 
     // copy
     public Vector(Vector other){
         this.value = other.getValue();
-        this.theta = other.getTheta();
+        this.angle = other.getAngle();
     }
 
     // get/set methods
@@ -27,15 +28,15 @@ public class Vector {
         return value;
     }
 
-    public double getTheta(){
-        return theta;
+    public double getAngle(){
+        return angle;
     }
 
     public void setValue(double val){
         value = val;
     }
 
-    public void setTheta(double val){
-        theta = val;
+    public void setAngle(double val){
+        angle = val;
     }
 }

@@ -45,6 +45,10 @@ public class Particle {
     }
 
     public void update(double time){
+        double xSpeed = velocity.getValue() * Math.cos(velocity.getAngle());
+        double ySpeed = velocity.getValue() * Math.sin(velocity.getAngle());
 
+        x += (xSpeed * time);
+        y += (ySpeed * time);
     }
 }

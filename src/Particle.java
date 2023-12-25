@@ -1,6 +1,7 @@
 public class Particle {
     private double x;
     private double y;
+    private double mass;
     private Vector velocity;
 
     // constructors
@@ -9,13 +10,15 @@ public class Particle {
     public Particle(){
         x = 0;
         y = 0;
+        mass = 0;
         velocity = new Vector();
     }
 
     // value
-    public Particle(double x, double y, double speed, double angle){
+    public Particle(double x, double y, double mass, double speed, double angle){
         this.x = x;
         this.y = y;
+        this.mass = mass;
         velocity = new Vector(speed, angle);
     }
 
@@ -23,6 +26,7 @@ public class Particle {
     public Particle(Particle other){
         this.x = other.getX();
         this.y = other.getY();
+        this.mass = other.getMass();
         velocity = new Vector(other.getVelocity());
     }
 
@@ -34,6 +38,10 @@ public class Particle {
 
     public double getY(){
         return y;
+    }
+
+    public double getMass(){
+        return mass;
     }
 
     public Vector getVelocity(){
@@ -50,5 +58,9 @@ public class Particle {
 
         x += (xSpeed * time);
         y += (ySpeed * time);
+    }
+
+    public double kinEnergy(){
+        return (mass * Math.pow(velocity.getValue(), 2)) / 2;
     }
 }

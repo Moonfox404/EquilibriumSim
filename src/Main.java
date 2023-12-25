@@ -21,10 +21,12 @@ public class Main {
     }
 
     static void initSim(Particle[] system){
+        // all values random except mass = 12
         for(int i = 0; i < system.length; i++){
             system[i] = new Particle(
                     Math.random() * 6,
                     Math.random() * 6,
+                    12,
                     Math.random(),
                     Math.random() * (2 * Math.PI + 1));
 

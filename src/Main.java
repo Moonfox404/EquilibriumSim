@@ -10,7 +10,21 @@ public class Main {
     }
 
     static void elasticCollision(Particle p1, Particle p2){
+        Vector v1wrt2 = Vector.subtract(p1.getVelocity(), p2.getVelocity());
 
+        double v2New = (2 * v1wrt2.getValue() * p1.getMass()) / (p1.getMass() + p2.getMass());
+        double v1New = ((2 * v1wrt2.getValue() * p2.getMass()) / (p1.getMass() + p2.getMass())) - v1wrt2.getValue();
+
+        Vector vel1New = (v1New >= 0) ? new Vector(v1New, v1wrt2.getAngle())
+                : new Vector(Math.abs(v1New), (v1wrt2.getAngle() + Math.PI));
+        vel1New.add(p2.getVelocity());
+
+        Vector vel2New = (v2New >= 0) ? new Vector(v2New, v1wrt2.getAngle())
+                : new Vector(Math.abs(v2New), (v1wrt2.getAngle() + Math.PI));
+        vel2New.add(p2.getVelocity());
+
+        p1.setVelocity(vel1New.getValue(), vel1New.getAngle());
+        p2.setVelocity(vel2New.getValue(), vel2New.getAngle());
     }
 
     static void runSim(Particle[] system){

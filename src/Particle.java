@@ -53,12 +53,14 @@ public class Particle {
         velocity.setAngle(angle);
     }
 
+    // other methods
+
     public void update(double time){
         double xSpeed = velocity.getValue() * Math.cos(velocity.getAngle());
         double ySpeed = velocity.getValue() * Math.sin(velocity.getAngle());
 
-        x += (xSpeed * time);
-        y += (ySpeed * time);
+        x = (double) Math.round((x + (xSpeed * time)) * 1000) / 1000;
+        y = (double) Math.round((y + (ySpeed * time)) * 1000) / 1000;
     }
 
     public double kinEnergy(){

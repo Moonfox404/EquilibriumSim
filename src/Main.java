@@ -1,16 +1,37 @@
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.HashMap;
 
 public class Main {
 
     static void updateStatus(Particle[] system){
+        HashMap<String, Particle> points = new HashMap<>();
         for (Particle particle : system) {
             particle.update(0.5);
+
+            String coords = ((Double) particle.getX()).toString().concat(((Double) particle.getY()).toString());
+            if(points.containsKey(coords)){
+                elasticCollision(particle, points.get(coords));
+                points.remove(coords);
+            } else {
+                points.put(coords, particle);
+            }
+        }
+        points.clear();
+
+        testSim(system);
+    }
+
+    static void testSim(Particle[] system){
+        System.out.println();
+        for(int i = 0; i < system.length; i++){
+            System.out.println(i + ":\nx: " + system[i].getX() + "\ty: " + system[i].getY());
         }
     }
 
     static void elasticCollision(Particle p1, Particle p2){
         Vector v1wrt2 = Vector.subtract(p1.getVelocity(), p2.getVelocity());
+        System.out.println("\nColliding... vel1 rel speed: " + v1wrt2.getValue()+ ", rel angle: " + v1wrt2.getAngle());
 
         double v2New = (2 * v1wrt2.getValue() * p1.getMass()) / (p1.getMass() + p2.getMass());
         double v1New = ((2 * v1wrt2.getValue() * p2.getMass()) / (p1.getMass() + p2.getMass())) - v1wrt2.getValue();
@@ -56,7 +77,10 @@ public class Main {
         final int size = 2;
         Particle[] system = new Particle[size];
 
-        initSim(system);
+        system[0] = new Particle(2, 0, 1, 1, Math.PI);
+        system[1] = new Particle(-2, 0, 1, 1, 0);
+
+        // initSim(system);
         runSim(system);
     }
 }

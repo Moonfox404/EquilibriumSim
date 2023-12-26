@@ -47,7 +47,7 @@ public class Vector {
         double y_component = (v1.getValue() * Math.sin(v1.getAngle())) + (v2.getValue() * Math.sin(v2.getAngle()));
 
         double res_magnitude = Math.sqrt(Math.pow(x_component, 2) + Math.pow(y_component, 2));
-        double res_angle = Math.atan(Math.abs(x_component) / Math.abs(y_component));
+        double res_angle = (x_component != 0) ? Math.atan(Math.abs(y_component) / Math.abs(x_component)) : Math.PI/4;
 
         if(x_component < 0){
             if(y_component >= 0){

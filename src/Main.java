@@ -9,6 +9,10 @@ public class Main {
         }
     }
 
+    static void elasticCollision(Particle p1, Particle p2){
+
+    }
+
     static void runSim(Particle[] system){
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
@@ -31,6 +35,7 @@ public class Main {
                     Math.random() * (2 * Math.PI + 1));
 
         }
+        updateStatus(system);
     }
 
     public static void main(String[] args) {

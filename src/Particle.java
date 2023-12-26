@@ -1,7 +1,7 @@
 public class Particle {
     private double x;
     private double y;
-    private double mass;
+    final private double mass;
     private Vector velocity;
 
     // constructors
@@ -49,7 +49,8 @@ public class Particle {
     }
 
     public void setVelocity(double speed, double angle){
-        velocity = new Vector(speed, angle);
+        velocity.setValue(speed);
+        velocity.setAngle(angle);
     }
 
     public void update(double time){

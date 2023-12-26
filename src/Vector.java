@@ -42,9 +42,9 @@ public class Vector {
 
     // other methods
 
-    public Vector add(Vector other){
-        double x_component = (value * Math.cos(angle)) + (other.getValue() * Math.cos(other.getAngle()));
-        double y_component = (value * Math.sin(angle)) + (other.getValue() * Math.sin(other.getAngle()));
+    public static Vector add(Vector v1, Vector v2){
+        double x_component = (v1.getValue() * Math.cos(v1.getAngle())) + (v2.getValue() * Math.cos(v2.getAngle()));
+        double y_component = (v1.getValue() * Math.sin(v1.getAngle())) + (v2.getValue() * Math.sin(v2.getAngle()));
 
         double res_magnitude = Math.sqrt(Math.pow(x_component, 2) + Math.pow(y_component, 2));
         double res_angle = Math.atan(Math.abs(x_component) / Math.abs(y_component));
@@ -63,8 +63,34 @@ public class Vector {
         return sum;
     }
 
-    public Vector subtract(Vector other){
+    public void add(Vector other){
+        double x_component = (value * Math.cos(angle)) + (other.getValue() * Math.cos(other.getAngle()));
+        double y_component = (value * Math.sin(angle)) + (other.getValue() * Math.sin(other.getAngle()));
+
+        double res_magnitude = Math.sqrt(Math.pow(x_component, 2) + Math.pow(y_component, 2));
+        double res_angle = Math.atan(Math.abs(x_component) / Math.abs(y_component));
+
+        if(x_component < 0){
+            if(y_component >= 0){
+                res_angle = Math.PI - res_angle;
+            } else {
+                res_angle = Math.PI + res_angle;
+            }
+        } else if(y_component < 0){
+            res_angle = (2 * Math.PI) - res_angle;
+        }
+
+        value = res_magnitude;
+        angle = res_angle;
+    }
+
+    public static Vector subtract(Vector v1, Vector v2){
+        Vector flip = new Vector(v2.getValue(), (v2.getAngle() + Math.PI));
+        return add(v1, flip);
+    }
+
+    public void subtract(Vector other){
         Vector flip = new Vector(other.getValue(), (other.getAngle() + Math.PI));
-        return this.add(flip);
+        this.add(flip);
     }
 }

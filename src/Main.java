@@ -5,11 +5,13 @@ import java.util.HashMap;
 public class Main {
 
     static void updateStatus(Particle[] system){
-        HashMap<String, Particle> points = new HashMap<>();
+        HashMap<Integer, Particle> points = new HashMap<>();
         for (Particle particle : system) {
+            // update the coordinates to account for its displacement over time
             particle.update(0.5);
 
-            String coords = ((Double) particle.getX()).toString().concat(((Double) particle.getY()).toString());
+            // implement collision interaction between particles
+            Integer coords = Integer.parseInt(((Double) particle.getX()).toString().concat(((Double) particle.getY()).toString()));
             if(points.containsKey(coords)){
                 elasticCollision(particle, points.get(coords));
                 points.remove(coords);
@@ -31,7 +33,10 @@ public class Main {
 
     static void elasticCollision(Particle p1, Particle p2){
         Vector v1wrt2 = Vector.subtract(p1.getVelocity(), p2.getVelocity());
-        System.out.println("\nColliding... vel1 rel speed: " + v1wrt2.getValue()+ ", rel angle: " + v1wrt2.getAngle());
+        System.out.println("\nColliding...\np1 initial speed: " + p1.getVelocity().getValue()
+                + ", initial angle: " + p1.getVelocity().getAngle()
+                + "\np2 initial speed: " + p2.getVelocity().getValue()
+                + ", initial angle: " + p2.getVelocity().getAngle());
 
         double v2New = (2 * v1wrt2.getValue() * p1.getMass()) / (p1.getMass() + p2.getMass());
         double v1New = ((2 * v1wrt2.getValue() * p2.getMass()) / (p1.getMass() + p2.getMass())) - v1wrt2.getValue();
@@ -46,9 +51,14 @@ public class Main {
 
         p1.setVelocity(vel1New.getValue(), vel1New.getAngle());
         p2.setVelocity(vel2New.getValue(), vel2New.getAngle());
+
+        System.out.println("p1 final speed: " + p1.getVelocity().getValue()
+                + ", final angle: " + p1.getVelocity().getAngle()
+                + "\np2 final speed: " + p2.getVelocity().getValue()
+                + ", final angle: " + p2.getVelocity().getAngle());
     }
 
-    static void runSim(Particle[] system){
+    static void runSim(Particle[] system, int cycleSpeed){
         Timer timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
                                       @Override
@@ -56,7 +66,7 @@ public class Main {
                                           updateStatus(system);
                                       }
                                   },
-                0, 500);
+                0, cycleSpeed);
     }
 
     static void initSim(Particle[] system){
@@ -81,6 +91,6 @@ public class Main {
         system[1] = new Particle(-2, 0, 1, 1, 0);
 
         // initSim(system);
-        runSim(system);
+        runSim(system, 500);
     }
 }
